@@ -168,7 +168,9 @@ class Envira_Rest {
 			$gallery_data = [];
 		}
 
-		if ( ! is_array( $gallery_data['config'] ) ) {
+		if ( empty( $gallery_data['config'] ) ) {
+			$gallery_data['config'] = [];
+
 			$common = new Envira_Gallery_Common();
 			// Loop through the defaults and prepare them to be stored.
 			$defaults = $common->get_config_defaults( $object->ID );

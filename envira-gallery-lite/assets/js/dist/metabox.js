@@ -600,7 +600,7 @@ jQuery( document ).ready( function( $ ) {
     * Delete Single Image
     */
     $( document ).on( 'click', '#envira-gallery-main .envira-gallery-remove-image', function( e ) {
-
+        
         e.preventDefault();
 
         // Bail out if the user does not actually want to remove the image.
@@ -824,7 +824,7 @@ jQuery( document ).ready( function( $ ) {
         }
 
     } );
-
+	
     // Enable sortable functionality on images
 	envira_gallery_sortable( $ );
 
@@ -835,7 +835,7 @@ jQuery( document ).ready( function( $ ) {
             // Re-enable sortable functionality on images, now we're viewing the default gallery type
             envira_gallery_sortable( $ );
         }
-
+        
     } );
 
     // Select / deselect images
@@ -851,7 +851,7 @@ jQuery( document ).ready( function( $ ) {
             $( gallery_item ).removeClass( 'selected' );
             envira_gallery_last_selected_image = false;
         } else {
-
+            
             // If the shift key is being held down, and there's another image selected, select every image between this clicked image
             // and the other selected image
             if ( envira_gallery_shift_key_pressed && envira_gallery_last_selected_image !== false ) {
@@ -877,7 +877,7 @@ jQuery( document ).ready( function( $ ) {
             envira_gallery_last_selected_image = $( gallery_item );
 
         }
-
+        
         // Show/hide buttons depending on whether
         // any galleries have been selected
         if ( $( 'ul#envira-gallery-output > li.selected' ).length > 0 ) {
@@ -914,17 +914,17 @@ function envira_gallery_sortable( $ ) {
             if ( ! item.hasClass( 'selected' ) ) {
                 item.addClass( 'selected' ).siblings().removeClass( 'selected' );
             }
-
+            
             // Clone the selected items into an array
             var elements = item.parent().children( '.selected' ).clone();
-
-            // Add a property to `item` called 'multidrag` that contains the
+            
+            // Add a property to `item` called 'multidrag` that contains the 
             // selected items, then remove the selected items from the source list
             item.data( 'multidrag', elements ).siblings( '.selected' ).remove();
-
+            
             // Now the selected items exist in memory, attached to the `item`,
             // so we can access them later when we get to the `stop()` callback
-
+            
             // Create the helper
             var helper = $( '<li/>' );
             return helper.append( elements );
@@ -937,7 +937,7 @@ function envira_gallery_sortable( $ ) {
 
             // Remove the selected class from everything
             $( 'li.selected', $( envira_gallery_output ) ).removeClass( 'selected' );
-
+            
             // Send AJAX request to store the new sort order
             $.ajax( {
                 url:      envira_gallery_metabox.ajax,
@@ -1143,9 +1143,9 @@ jQuery( document ).ready( function( $ ) {
     * Destroy Video when closed
     */
     $( document ).on( 'click', envira_close_video_link, function( e ) {
-
+        
         e.preventDefault();
-
+        
         $( this ).closest( '.envira-video-help' ).remove();
 
     } );

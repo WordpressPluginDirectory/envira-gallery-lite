@@ -5,7 +5,7 @@
  * Description: Envira Gallery is the best responsive WordPress gallery plugin. This is the Lite version.
  * Author:      Envira Gallery Team
  * Author URI:  http://enviragallery.com
- * Version:     1.8.7.3
+ * Version:     1.8.8
  * Text Domain: envira-gallery-lite
  *
  * Envira Gallery is free software: you can redistribute it and/or modify
@@ -55,7 +55,7 @@ class Envira_Gallery_Lite {
 	 *
 	 * @var string
 	 */
-	public $version = '1.8.7.3';
+	public $version = '1.8.8';
 
 	/**
 	 * The name of the plugin.
@@ -198,7 +198,6 @@ class Envira_Gallery_Lite {
 		require plugin_dir_path( __FILE__ ) . 'includes/admin/review.php';
 		require plugin_dir_path( __FILE__ ) . 'includes/admin/settings.php';
 		require plugin_dir_path( __FILE__ ) . 'includes/admin/gutenberg.php';
-		require plugin_dir_path( __FILE__ ) . 'includes/admin/subscribe.php';
 		require plugin_dir_path( __FILE__ ) . 'includes/admin/welcome.php';
 		require plugin_dir_path( __FILE__ ) . 'includes/admin/Envira_Lite_Support.php';
 		require plugin_dir_path( __FILE__ ) . 'includes/admin/albums.php';

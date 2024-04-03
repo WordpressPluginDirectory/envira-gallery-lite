@@ -595,11 +595,11 @@ class Envira_Welcome {
 		<div class="envira-welcome-wrap envira-about">
 			<div class="envira-panel envira-lite-about-panel">
 				<div class="content">
-					<h3><?php esc_html_e( 'Hello and welcome to Envira Gallery, the most beginner-friendly WordPress Gallery Plugin. At Envira Gallery, we build software that helps you create beautiful galleries in minutes.', 'envira-gallery-lite' );?></h3>
-					<p><?php esc_html_e( 'Over the years, we found that most WordPress gallery plugins were bloated, buggy, slow, and very hard to use. So, we started with a simple goal: build a WordPress gallery system that’s both easy and powerful.', 'envira-gallery-lite' );?></p>
-					<p><?php esc_html_e( 'Our goal is to provide the easiest way to create beautiful galleries.', 'envira-gallery-lite' );?></p>
-					<p><?php esc_html_e( 'Envira Gallery is brought to you by the same team that’s behind the largest WordPress resource site, WPBeginner, the most popular lead-generation software, OptinMonster, the best WordPress analytics plugin, MonsterInsights, and more!', 'envira-gallery-lite' );?></p>
-					<p><?php esc_html_e( 'Yup, we know a thing or two about building awesome products that customers love.', 'envira-gallery-lite' );?></p>
+					<h3><?php esc_html_e( 'Hello and welcome to Envira Gallery, the most beginner-friendly WordPress Gallery Plugin. At Envira Gallery, we build software that helps you create beautiful galleries in minutes.', 'envira-gallery-lite' ); ?></h3>
+					<p><?php esc_html_e( 'Over the years, we found that most WordPress gallery plugins were bloated, buggy, slow, and very hard to use. So, we started with a simple goal: build a WordPress gallery system that’s both easy and powerful.', 'envira-gallery-lite' ); ?></p>
+					<p><?php esc_html_e( 'Our goal is to provide the easiest way to create beautiful galleries.', 'envira-gallery-lite' ); ?></p>
+					<p><?php esc_html_e( 'Envira Gallery is brought to you by the same team that’s behind the largest WordPress resource site, WPBeginner, the most popular lead-generation software, OptinMonster, the best WordPress analytics plugin, MonsterInsights, and more!', 'envira-gallery-lite' ); ?></p>
+					<p><?php esc_html_e( 'Yup, we know a thing or two about building awesome products that customers love.', 'envira-gallery-lite' ); ?></p>
 				</div>
 				<div class="image">
 					<img src="<?php echo esc_url( trailingslashit( ENVIRA_LITE_URL ) . 'assets/images/about/team.jpg' ); ?> ">

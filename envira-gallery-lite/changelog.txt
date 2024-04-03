@@ -1,6 +1,10 @@
 
 == Changelog ==
 
+1.8.4.7
+
+* Added: Permissions management for the Envira Gallery.
+
 1.8.4.6
 
 * Fixed: Javascript warnings when adding a gallery in the block editor.

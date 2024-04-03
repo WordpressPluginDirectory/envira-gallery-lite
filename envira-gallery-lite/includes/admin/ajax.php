@@ -872,7 +872,6 @@ function envira_gallery_get_attachment_links() {
 		wp_send_json_error( [ 'message' => esc_html__( 'You are not allowed to edit galleries.', 'envira-gallery-lite' ) ] );
 	}
 
-
 	// Get required inputs.
 	$attachment_id = isset( $_POST['attachment_id'] ) ? absint( wp_unslash( $_POST['attachment_id'] ) ) : null;
 
@@ -900,7 +899,6 @@ function envira_gallery_editor_get_galleries() {
 	if ( ! current_user_can( 'edit_posts' ) ) {
 		wp_send_json_error( [ 'message' => esc_html__( 'You are not allowed to edit galleries.', 'envira-gallery-lite' ) ] );
 	}
-
 
 	// Get POSTed fields.
 	$search       = isset( $_POST['search'] ) ? (bool) wp_unslash( $_POST['search'] ) : false; // @codingStandardsIgnoreLine
@@ -1011,7 +1009,7 @@ function envira_gallery_move_media() {
 	}
 
 	// Get POSTed fields.
-	$to_gallery_id   = isset( $_POST['to_gallery_id'] ) ? absint( $_POST['to_gallery_id'] ) : null;
+	$to_gallery_id = isset( $_POST['to_gallery_id'] ) ? absint( $_POST['to_gallery_id'] ) : null;
 	$image_ids       = isset( $_POST['image_ids'] ) ? wp_unslash( $_POST['image_ids'] ) : array(); // @codingStandardsIgnoreLine
 
 	if ( ! $from_gallery_id ) {

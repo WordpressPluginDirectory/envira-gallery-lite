@@ -9,9 +9,12 @@
  */
 
 // Exit if accessed directly.
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+use Envira\Admin\Envira_Permissions;
 
 /**
  * Common Helper Class
@@ -66,12 +69,14 @@ class Envira_Gallery_Common_Admin {
 		// Load the base class object.
 		$this->base = Envira_Gallery_Lite::get_instance();
 
+		add_action( 'admin_init', [ $this, 'add_capabilities' ] );
+
 		// Handle any necessary DB upgrades.
 		add_action( 'admin_init', [ $this, 'db_upgrade' ] );
 
 		// Load admin assets.
-		add_action( 'admin_enqueue_scripts', [ $this, 'admin_styles' ] );
-		add_action( 'admin_enqueue_scripts', [ $this, 'admin_scripts' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'admin_styles' ], 10, 1 );
+		add_action( 'admin_enqueue_scripts', [ $this, 'admin_scripts' ], 10, 1 );
 
 		// Delete any gallery association on attachment deletion. Also delete any extra cropped images.
 		add_action( 'delete_attachment', [ $this, 'delete_gallery_association' ] );
@@ -88,9 +93,18 @@ class Envira_Gallery_Common_Admin {
 		add_action( 'in_admin_footer', [ $this, 'footer_template' ] );
 		add_action( 'admin_footer', [ $this, 'notifications_template' ] );
 		add_action( 'admin_menu', [ $this, 'add_upgrade_menu_item' ], 99 );
-		add_action('admin_head', [ $this, 'admin_inline_styles' ] );
+		add_action( 'admin_head', [ $this, 'admin_inline_styles' ] );
 		add_action( 'admin_footer', [ $this, 'admin_sidebar_target' ] );
+	}
 
+	/**
+	 * Set capabilities for Envira Gallery Lite.
+	 *
+	 * @return void
+	 */
+	public function add_capabilities() {
+
+		( new \Envira\Admin\Envira_Capabilities() )->add_capabilities();
 	}
 
 	/**
@@ -165,7 +179,6 @@ class Envira_Gallery_Common_Admin {
 			$submenu['edit.php?post_type=envira'][ $upgrade_link_position ][] = 'envira-sidebar-upgrade-pro';
 		}
 		// phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
-
 	}
 
 	/**
@@ -389,9 +402,10 @@ class Envira_Gallery_Common_Admin {
 	 *
 	 * @since 1.3.1
 	 *
+	 * @param string $hook Page Hook.
 	 * @return void Return early if not on the proper screen.
 	 */
-	public function admin_styles() {
+	public function admin_styles( $hook ) {
 
 		// Get current screen.
 		$screen = get_current_screen();
@@ -405,6 +419,13 @@ class Envira_Gallery_Common_Admin {
 		wp_register_style( $this->base->plugin_slug . '-admin-style', plugins_url( 'assets/css/admin.css', $this->base->file ), [], $this->base->version );
 		wp_enqueue_style( $this->base->plugin_slug . '-admin-style' );
 
+		if ( 'envira_page_envira-gallery-settings' === $hook && isset( $_GET['post_type'] ) && 'envira' === $_GET['post_type'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+			wp_enqueue_style( 'envira-gallery-settings-style-css', plugins_url( 'assets/css/settings.css', $this->base->file ), false, $this->base->version );
+			wp_enqueue_style( 'envira-choice-css', plugins_url( 'assets/css/choices.css', $this->base->file ), false, $this->base->version );
+
+		}
+
 		// Fire a hook to load in custom admin styles.
 		do_action( 'envira_gallery_admin_styles' );
 	}
@@ -414,9 +435,10 @@ class Envira_Gallery_Common_Admin {
 	 *
 	 * @since 1.3.5
 	 *
+	 * @param string $hook Page Hook.
 	 * @return void Return early if not on the proper screen.
 	 */
-	public function admin_scripts() {
+	public function admin_scripts( $hook ) {
 
 		// Get current screen.
 		$screen = get_current_screen();
@@ -427,8 +449,27 @@ class Envira_Gallery_Common_Admin {
 		}
 
 		wp_enqueue_script( 'clipboard' );
+
+		wp_register_script( $this->base->plugin_slug . '-tabs-script', plugins_url( 'assets/js/min/tabs-min.js', $this->base->file ), [ 'jquery' ], $this->base->version, true );
+		wp_enqueue_script( $this->base->plugin_slug . '-tabs-script' );
+
 		// Load necessary admin scripts.
 		wp_register_script( $this->base->plugin_slug . '-admin-script', plugins_url( 'assets/js/min/admin-min.js', $this->base->file ), [ 'jquery', 'clipboard' ], $this->base->version, false );
+
+		if ( 'envira_page_envira-gallery-settings' === $hook ) {
+			wp_register_script( $this->base->plugin_slug . '-permissions-check', plugins_url( 'assets/js/min/envira-permissions-min.js', $this->base->file ), [], $this->base->version, false );
+			wp_register_script( $this->base->plugin_slug . '-permissions-modal-js', plugins_url( 'assets/js/lib/a11y-dialog.min.js', $this->base->file ), [], $this->base->version, false );
+
+			$permissions = new Envira_Permissions();
+			$permissions->envira_permissions_localize();
+			wp_enqueue_script( $this->base->plugin_slug . '-choice-js', plugins_url( 'assets/js/lib/choices.min.js', $this->base->file ), [ 'jquery' ], $this->base->version, false );
+
+			// For permisson modal.
+			wp_enqueue_script( $this->base->plugin_slug . '-permissions-modal-js' );
+			wp_enqueue_script( $this->base->plugin_slug . '-permissions-check' );
+
+		}
+
 		wp_enqueue_script( $this->base->plugin_slug . '-admin-script' );
 		wp_localize_script(
 			$this->base->plugin_slug . '-admin-script',
@@ -447,7 +488,7 @@ class Envira_Gallery_Common_Admin {
 				'unlock_url'                 => esc_url( $this->get_upgrade_link( 'https://enviragallery.com/pricing', 'listgallery', 'unlock' ) ),
 				'unlock_title'               => esc_html__( 'Unlock All Features', 'envira-gallery-lite' ),
 				'unlock_text'                => esc_html__( 'Upgrade to Pro to get access to Albums, Protected Images,  Video Galleries, and more!', 'envira-gallery-lite' ),
-				'unlock_btn'				 => esc_html__( 'Unlock Gallery Features '),
+				'unlock_btn'                 => esc_html__( 'Unlock Gallery Features ' ),
 			]
 		);
 

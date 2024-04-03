@@ -90,6 +90,7 @@ class Envira_Gallery_Metaboxes {
 		add_action( 'envira_gallery_tab_videos', [ $this, 'lite_videos_tab' ] );
 		add_action( 'envira_gallery_tab_social', [ $this, 'lite_social_tab' ] );
 		add_action( 'envira_gallery_tab_tags', [ $this, 'lite_tags_tab' ] );
+		add_action( 'envira_gallery_tab_animations', [ $this, 'lite_animations_tab' ] );
 		add_action( 'envira_gallery_tab_pagination', [ $this, 'lite_pagination_tab' ] );
 
 		// Save Gallery.
@@ -1223,6 +1224,7 @@ class Envira_Gallery_Metaboxes {
 		$tabs['videos']     = __( 'Videos', 'envira-gallery-lite' );
 		$tabs['social']     = __( 'Social', 'envira-gallery-lite' );
 		$tabs['tags']       = __( 'Tags', 'envira-gallery-lite' );
+		$tabs['animations'] = __( 'Animations', 'envira-gallery-lite' );
 		$tabs['pagination'] = __( 'Pagination', 'envira-gallery-lite' );
 		return $tabs;
 	}
@@ -1352,6 +1354,9 @@ class Envira_Gallery_Metaboxes {
 		<?php
 	}
 
+	// TODO CONTINUE HERE ADD ANIMATIONS ADDON.
+
+
 	/**
 	 * Lite: Callback for displaying the settings UI for the Mobile tab.
 	 *
@@ -1381,6 +1386,41 @@ class Envira_Gallery_Metaboxes {
 			<div class="cta-buttons">
 				<a href="<?php echo esc_url( Envira_Gallery_Common_Admin::get_instance()->get_upgrade_link( 'https://enviragallery.com/lite', 'adminpagetags', 'viewtagsaddondemobutton' ) ); ?>" target="_blank" class="button button-secondary">View Tags Addon Demo</a>
 				<a href="<?php echo esc_url( Envira_Gallery_Common_Admin::get_instance()->get_upgrade_link( false, 'adminpagetags', 'upgradetoenviraprobutton' ) ); ?>" target="_blank" class="button button-primary">Upgrade To Envira Pro</a>
+			</div>
+		</div>
+
+		<?php
+	}
+
+	/**
+	 * Lite: Callback for displaying the settings UI for the Mobile tab.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param object $post The current post object.
+	 */
+	public function lite_animations_tab( $post ) {
+
+		?>
+
+		<div class="upgrade-header">
+			<img src="<?php echo esc_url( trailingslashit( ENVIRA_LITE_URL ) . 'assets/images/animations-icon.png' ); ?>" width="35" height="35" />
+			<h2>Animate your galleries</h2>
+		</div>
+
+		<div class="upgrade-content">
+			<div class="hero-image-exterior">
+				<div class="interior">
+				<a href="<?php echo esc_url( Envira_Gallery_Common_Admin::get_instance()->get_upgrade_link( 'https://enviragallery.com/lite', 'adminpageanimations', 'animationsaddonimage' ) ); ?>" target="_blank"><img src="<?php echo esc_url( trailingslashit( ENVIRA_LITE_URL ) . 'assets/images/animations-addon.png' ); ?>" /></a>
+				</div>
+			</div>
+			<p>By upgrading to Envira Gallery Pro, you can add Animations to your gallery.</p>
+
+			<p><strong>Bonus:</strong> Envira Lite users get a discount code for <span class="envira-green">50% off</span> regular price.</p>
+
+			<div class="cta-buttons">
+				<a href="<?php echo esc_url( Envira_Gallery_Common_Admin::get_instance()->get_upgrade_link( 'https://enviragallery.com/lite', 'adminpageanimations', 'viewanimationsaddondemobutton' ) ); ?>" target="_blank" class="button button-secondary">View Animations Addon Demo</a>
+				<a href="<?php echo esc_url( Envira_Gallery_Common_Admin::get_instance()->get_upgrade_link( false, 'adminpageanimations', 'upgradetoenviraprobutton' ) ); ?>" target="_blank" class="button button-primary">Upgrade To Envira Pro</a>
 			</div>
 		</div>
 

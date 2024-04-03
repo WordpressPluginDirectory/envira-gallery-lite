@@ -13,7 +13,7 @@
             envira_tabs_hash        = window.location.hash,
             envira_tabs_current_tab = window.location.hash.replace( '!', '' );
 
-        // If the URL contains a hash beginning with envira-tab, mark that tab as open
+				// If the URL contains a hash beginning with envira-tab, mark that tab as open
         // and display that tab's panel.
         if ( envira_tabs_hash && envira_tabs_hash.indexOf( 'envira-tab-' ) >= 0 ) {
             // Find the tab panel that the tab corresponds to
@@ -38,7 +38,7 @@
 
                 // Append the selected tab as a hash to the post action
                 $( '#post' ).attr( 'action', envira_post_action + window.location.hash );
-            } 
+            }
         }
 
         // Change tabs on click.
@@ -91,8 +91,8 @@
 
                     // Append the selected tab as a hash to the post action
                     $( '#post' ).attr( 'action', envira_post_action + window.location.hash );
-                }  
-            }      
+                }
+            }
 
         } );
     } );

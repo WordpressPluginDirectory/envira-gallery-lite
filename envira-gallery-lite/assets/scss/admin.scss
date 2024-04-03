@@ -1470,3 +1470,100 @@ div.addon-tag:after {
 	color: #37993B;
 }
 
+
+/* ==========================================================================
+	 Envira Permissions Modal - uses a11y-dialog
+	 ========================================================================== */
+/**
+ * 1. Make the dialog container, and its child overlay spread across
+ *    the entire window.
+ */
+.dialog-container,
+.dialog-overlay {
+	position: fixed; /* 1 */
+	top: 0; /* 1 */
+	right: 0; /* 1 */
+	bottom: 0; /* 1 */
+	left: 0; /* 1 */
+}
+
+/**
+ * 1. Make sure the dialog container and all its descendants sits on
+ *    top of the rest of the page.
+ * 2. Make the dialog container a flex container to easily center the
+ *    dialog.
+ */
+.dialog-container {
+	z-index: 2; /* 1 */
+	display: flex; /* 2 */
+}
+
+/**
+ * 1. Make sure the dialog container and all its descendants are not
+ *    visible and not focusable when it is hidden.
+ */
+.dialog-container[aria-hidden='true'] {
+	display: none; /* 1 */
+}
+
+/**
+  * 1. Make the overlay look like an overlay.
+  */
+.dialog-overlay {
+	background-color: rgb(43 46 56 / 0.9); /* 1 */
+	animation: fade-in 200ms both;
+	opacity: 0.5;
+}
+
+/**
+  * 1. Vertically and horizontally center the dialog in the page.
+  * 2. Make sure the dialog sits on top of the overlay.
+  * 3. Make sure the dialog has an opaque background.
+  */
+.dialog-content {
+	margin: auto; /* 1 */
+	z-index: 2; /* 2 */
+	position: relative; /* 2 */
+	background-color: white; /* 3 */
+	animation: fade-in 400ms 200ms both, slide-up 400ms 200ms both;
+	padding: 2em;
+	max-width: 90%;
+	width: 600px;
+	border-radius: 5px;
+	border-top: #7cc048 5px solid;
+	font-size: 1rem;
+	text-align: center;
+}
+.dialog-content p{
+	font-size: 1.2rem;
+	margin: 0 0 16px;
+}
+
+.dialog-content h3{
+	font-size: 1.4rem;
+}
+
+.dialog-content .envira-dialog-btn.primary{
+	background-color: #7cc048;
+	color: #fff;
+	border: 0;
+	border-radius: 5px;
+	cursor:pointer;
+	font-weight: 600;
+	line-height: 20px;
+	outline: none;
+	padding: 11px 17px;
+}
+
+.dialog-content .envira-dialog-btn{
+	background-color: #777777;
+	color: #fff;
+	border: 0;
+	border-radius: 5px;
+	cursor:pointer;
+	margin-left:10px;
+	font-weight: 600;
+	line-height: 20px;
+	outline: none;
+	padding: 11px 17px;
+}

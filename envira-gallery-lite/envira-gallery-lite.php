@@ -5,7 +5,7 @@
  * Description: Envira Gallery is the best responsive WordPress gallery plugin. This is the Lite version.
  * Author:      Envira Gallery Team
  * Author URI:  http://enviragallery.com
- * Version:     1.8.8
+ * Version:     1.8.9
  * Text Domain: envira-gallery-lite
  *
  * Envira Gallery is free software: you can redistribute it and/or modify
@@ -55,7 +55,7 @@ class Envira_Gallery_Lite {
 	 *
 	 * @var string
 	 */
-	public $version = '1.8.8';
+	public $version = '1.8.9';
 
 	/**
 	 * The name of the plugin.
@@ -174,6 +174,9 @@ class Envira_Gallery_Lite {
 			$this->require_admin();
 		}
 
+		// Check if we need to run a update routine.
+		$this->maybe_run_update();
+
 		// Add hook for when Envira has loaded.
 		// This hook is deliberately different from the Pro version, to prevent the entire site breaking
 		// if a user activates Lite with Pro Addons.
@@ -188,6 +191,8 @@ class Envira_Gallery_Lite {
 	public function require_admin() {
 		require plugin_dir_path( __FILE__ ) . 'includes/admin/addons.php';
 		require plugin_dir_path( __FILE__ ) . 'includes/admin/common.php';
+		require plugin_dir_path( __FILE__ ) . 'includes/admin/capabilities.php';
+		require plugin_dir_path( __FILE__ ) . 'includes/admin/permissions.php';
 		require plugin_dir_path( __FILE__ ) . 'includes/admin/editor.php';
 		require plugin_dir_path( __FILE__ ) . 'includes/admin/media.php';
 		require plugin_dir_path( __FILE__ ) . 'includes/admin/media-view.php';
@@ -520,6 +525,22 @@ class Envira_Gallery_Lite {
 	}
 
 	/**
+	 * Determine if there needs to be an update based on Envira Lite version.
+	 *
+	 * @since 1.8.9
+	 */
+	public function maybe_run_update() {
+
+		$version = get_option( 'envira_lite_version' );
+
+		if ( version_compare( $version, ENVIRA_LITE_VERSION, '<' ) ) {
+
+			update_option( 'envira_lite_version', ENVIRA_LITE_VERSION, 'no' );
+
+		}
+	}
+
+	/**
 	 * Returns the singleton instance of the class.
 	 *
 	 * @since 1.0.0
@@ -561,7 +582,6 @@ function envira_gallery_lite_activation_hook( $network_wide ) {
 
 // Load the main plugin class.
 $envira_gallery_lite = Envira_Gallery_Lite::get_instance();
-
 
 if ( ! function_exists( 'envira_lite_mobile_detect' ) ) {
 

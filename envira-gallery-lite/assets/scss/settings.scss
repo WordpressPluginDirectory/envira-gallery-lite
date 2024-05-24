@@ -29,7 +29,7 @@
 }
 
 #envira-gallery-settings {
-	padding: 20px 0;
+	padding: 10px 0;
 
 	#envira-gallery-refresh-submit {
 		margin-left: 10px;
@@ -133,17 +133,17 @@
 #envira-tabs {
 	.form-table {
 		th, td {
-			padding-top: 40px;
-			padding-bottom: 40px;
+			padding-top: 15px;
+			padding-bottom: 15px;
 		}
 		th {
 			@include mq(sm) {
-				padding-top: 40px;
+				padding-top: 5px;
 				padding-bottom: 10px;
 				padding-right: 0px !important;
 			}
 			@include mq(xs) {
-				padding-top: 40px;
+				padding-top: 5px;
 				padding-bottom: 10px;
 				padding-right: 0px !important;
 			}

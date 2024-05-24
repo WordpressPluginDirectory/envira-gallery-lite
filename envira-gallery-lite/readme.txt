@@ -1,13 +1,13 @@
- === Gallery Plugin for WordPress - Envira Photo Gallery ===
+=== Gallery Plugin for WordPress - Envira Photo Gallery ===
 Contributors: enviragallery
 Tags: gallery, image gallery, photo gallery, best gallery plugin, wordpress gallery plugin
 Requires at least: 5.5.0
-Tested up to: 6.4.1
+Tested up to: 6.5
 Requires PHP: 5.6
-Stable tag: 1.8.9
+Stable tag: 1.8.12
 License: GNU General Public License v2.0 or later
 
-Envira Gallery is the fastest, easiest to use WordPress image gallery plugin. Lightbox with Drag & Drop builder that helps you create beautiful galleries with just a few clicks.
+Envira Gallery is the fastest, easiest, and most powerful WordPress image gallery. Lightbox with Drag & Drop builder that helps you create beautiful galleries with just a few clicks.
 
 == Description ==
 
@@ -140,7 +140,7 @@ If you like this plugin, then consider checking out our other plugins:
 
 If you like our Envira Gallery plugin, then consider checking out our other projects:
 * <a href="http://soliloquywp.com/" rel="friend" title="Soliloquy">Soliloquy</a> - The Best WordPress Slider Plugin
-* <a href="https://wpforms.com.com/">WP Forms</a> – #1 drag & drop online form builder for WordPress (trusted by 5 million sites).
+* <a href="https://wpforms.com.com/">WP Forms</a> #1 drag & drop online form builder for WordPress (trusted by 5 million sites).
 * <a href="https://optinmonster.com/">OptinMonster</a> - Get more email subscribers with the most popular conversion optimization plugin for WordPress.
 * <a href="https://aioseo.com/">AIOSEO</a> - The original WordPress SEO plugin to help you rank higher in search results (trusted by over 3 million sites).
 * <a href="https://www.monsterinsights.com/">MonsterInsights</a> - See the stats that matter and grow your business with confidence. Best Google Analytics plugin for WordPress.
@@ -238,6 +238,17 @@ You can get access to more features, Addons and support by <a href="http://envir
 Yes, Envira has full translation and localization support via the envira-gallery textdomain. To submit a translation, see https://translate.wordpress.org/projects/wp-plugins/envira-gallery-lite
 
 == Changelog ==
+1.8.12
+* Added: Onboarding Wizard
+* Added: Image Licensing tab
+* Fixed: Capabilities check for some AJAX calls
+
+1.8.11
+* Fixed: Upgrade process validation
+
+1.8.10
+* Fixed: CSS selectors for admin page
+
 1.8.9
 * Added: Permission options
 * Added: Animations tab
@@ -400,4 +411,3 @@ Yes, Envira has full translation and localization support via the envira-gallery
 1.8.0
 
 * Added: Enable links in lightbox settings, when lightbox is deactivated.
-

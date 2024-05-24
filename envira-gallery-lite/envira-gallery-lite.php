@@ -5,7 +5,7 @@
  * Description: Envira Gallery is the best responsive WordPress gallery plugin. This is the Lite version.
  * Author:      Envira Gallery Team
  * Author URI:  http://enviragallery.com
- * Version:     1.8.9
+ * Version:     1.8.12
  * Text Domain: envira-gallery-lite
  *
  * Envira Gallery is free software: you can redistribute it and/or modify
@@ -55,7 +55,7 @@ class Envira_Gallery_Lite {
 	 *
 	 * @var string
 	 */
-	public $version = '1.8.9';
+	public $version = '1.8.12';
 
 	/**
 	 * The name of the plugin.
@@ -166,6 +166,9 @@ class Envira_Gallery_Lite {
 		// if a user activates Lite with Pro Addons.
 		do_action( 'envira_gallery_lite_init' );
 
+		// Redirect to wizard.
+		add_action( 'admin_init', [ $this, 'redirect_to_wizard' ], 9999 );
+
 		// Load global components.
 		$this->require_global();
 
@@ -206,6 +209,9 @@ class Envira_Gallery_Lite {
 		require plugin_dir_path( __FILE__ ) . 'includes/admin/welcome.php';
 		require plugin_dir_path( __FILE__ ) . 'includes/admin/Envira_Lite_Support.php';
 		require plugin_dir_path( __FILE__ ) . 'includes/admin/albums.php';
+		require plugin_dir_path( __FILE__ ) . 'includes/admin/onboarding-wizard.php';
+
+		( new OnboardingWizard() )->hooks();
 
 		( new Envira_Albums_Preview() )->hooks();
 		( new Envira_Settings() )->hooks();
@@ -245,8 +251,11 @@ class Envira_Gallery_Lite {
 		require plugin_dir_path( __FILE__ ) . 'includes/global/posttype.php';
 		require plugin_dir_path( __FILE__ ) . 'includes/global/shortcode.php';
 		require plugin_dir_path( __FILE__ ) . 'includes/global/rest.php';
+		require plugin_dir_path( __FILE__ ) . 'includes/global/Envira_Tracking.php';
 		require plugin_dir_path( __FILE__ ) . 'includes/admin/ajax.php';
 		require plugin_dir_path( __FILE__ ) . 'includes/admin/notifications.php';
+
+		( new Envira_Tracking() )->hooks();
 
 		$this->notifications = new Envira_Notifications();
 		$this->notifications->hooks();
@@ -555,6 +564,35 @@ class Envira_Gallery_Lite {
 
 		return self::$instance;
 	}
+
+	/**
+	 * Redirect to the wizard on activation.
+	 *
+	 * @since 1.9.14.
+	 *
+	 * @return void
+	 */
+	public function redirect_to_wizard() {
+		if ( ! get_transient( '_envira_lite_activation_redirect' ) ) {
+			return;
+		}
+
+		delete_transient( '_envira_lite_activation_redirect' );
+
+		// Only do this for single site installs.
+		if ( isset( $_GET['activate-multi'] ) || is_network_admin() ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return;
+		}
+
+		// Check if it is new install or not.
+		$envira_display_welcome = get_option( 'envira_lite_wizard' );
+
+		if ( ! $envira_display_welcome ) {
+			update_option( 'envira_lite_wizard', 'yes' );
+			wp_safe_redirect( admin_url( 'admin.php?page=envira-setup-wizard' ) );
+			exit;
+		}
+	}
 }
 
 register_activation_hook( __FILE__, 'envira_gallery_lite_activation_hook' );
@@ -574,6 +612,17 @@ function envira_gallery_lite_activation_hook( $network_wide ) {
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 		/* translators: %s: url */
 		wp_die( sprintf( wp_kses_post( __( 'Sorry, but your version of WordPress does not meet Envira Gallery\'s required version of <strong>5.0</strong> to run properly. The plugin has been deactivated. <a href="%s">Click here to return to the Dashboard</a>.', 'envira-gallery-lite' ) ), esc_url( get_admin_url() ) ) );
+	}
+
+	if ( empty( get_option( 'envira_lite_version' ) ) && empty( get_option( 'envira_version' ) ) ) {
+		// Add transient to trigger redirect on the first activation.
+		set_transient( '_envira_lite_activation_redirect', 1, 120 );
+	}
+
+	$over_time = get_option( 'envira_over_time', [] );
+	if ( empty( $over_time['installed_lite'] ) ) {
+		$over_time['installed_lite'] = wp_date( 'U' );
+		update_option( 'envira_over_time', $over_time );
 	}
 
 	// Make sure Envira Pro plugin, if activated is deactivated.

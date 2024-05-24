@@ -1,6 +1,8 @@
 
 == Changelog ==
 
+* Fixed: CSS selectors for admin page.
+
 1.8.4.7
 
 * Added: Permissions management for the Envira Gallery.

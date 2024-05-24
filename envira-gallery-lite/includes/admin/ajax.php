@@ -157,7 +157,7 @@ function envira_gallery_ajax_insert_images() {
 		wp_send_json_error( [ 'message' => esc_html__( 'Invalid Post ID.', 'envira-gallery-lite' ) ] );
 	}
 
-	if ( ! current_user_can( 'edit_posts', $post_id ) ) {
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
 		wp_send_json_error( [ 'message' => esc_html__( 'You are not allowed to edit galleries.', 'envira-gallery-lite' ) ] );
 	}
 
@@ -246,7 +246,7 @@ function envira_gallery_ajax_sort_images() {
 		wp_send_json_error( [ 'message' => esc_html__( 'Invalid Post ID.', 'envira-gallery-lite' ) ] );
 	}
 
-	if ( ! current_user_can( 'edit_posts', $post_id ) ) {
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
 		wp_send_json_error( [ 'message' => esc_html__( 'You are not allowed to edit galleries.', 'envira-gallery-lite' ) ] );
 	}
 
@@ -342,7 +342,7 @@ function envira_gallery_ajax_remove_images() {
 		wp_send_json_error( [ 'message' => esc_html__( 'Invalid Post ID.', 'envira-gallery-lite' ) ] );
 	}
 
-	if ( ! current_user_can( 'edit_posts', $post_id ) ) {
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
 		wp_send_json_error( [ 'message' => esc_html__( 'You are not allowed to edit galleries.', 'envira-gallery-lite' ) ] );
 	}
 
@@ -403,7 +403,7 @@ function envira_gallery_ajax_save_meta() {
 		wp_send_json_error( [ 'message' => esc_html__( 'Invalid Post ID.', 'envira-gallery-lite' ) ] );
 	}
 
-	if ( ! current_user_can( 'edit_posts', $post_id ) ) {
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
 		wp_send_json_error( [ 'message' => esc_html__( 'You are not allowed to edit galleries.', 'envira-gallery-lite' ) ] );
 	}
 
@@ -497,7 +497,7 @@ function envira_gallery_ajax_save_bulk_meta() {
 		wp_send_json_error( [ 'message' => esc_html__( 'Invalid Post ID.', 'envira-gallery-lite' ) ] );
 	}
 
-	if ( ! current_user_can( 'edit_posts', $post_id ) ) {
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
 		wp_send_json_error( [ 'message' => esc_html__( 'You are not allowed to edit galleries.', 'envira-gallery-lite' ) ] );
 	}
 
@@ -1004,7 +1004,7 @@ function envira_gallery_move_media() {
 		wp_send_json_error( [ 'message' => esc_html__( 'Invalid Post ID.', 'envira-gallery-lite' ) ] );
 	}
 
-	if ( ! current_user_can( 'edit_posts', $from_gallery_id ) ) {
+	if ( ! current_user_can( 'edit_post', $from_gallery_id ) ) {
 		wp_send_json_error( [ 'message' => esc_html__( 'You are not allowed to edit galleries.', 'envira-gallery-lite' ) ] );
 	}
 
@@ -1214,14 +1214,27 @@ function envira_connect() {
 		wp_send_json_error( [ 'message' => wp_kses_post( $valid_key->error ) ] );
 	}
 
-	$option                = get_option( 'envira_gallery' );
-	$option['key']         = $_POST['envira-license-key']; // @codingStandardsIgnoreLine
+	$option = get_option( 'envira_gallery' );
+
+	if ( ! is_array( $option ) ) {
+		$option = [];
+	}
+
+	$option['key']         = $key;
 	$option['type']        = isset( $valid_key->type ) ? $valid_key->type : $option['type'];
 	$option['is_expired']  = false;
 	$option['is_disabled'] = false;
 	$option['is_invalid']  = false;
 
 	update_option( 'envira_gallery', $option );
+
+	// Install addons from onboarding.
+
+	$onboarding = ! empty( $_POST['onboarding'] ) && sanitize_text_field( wp_unslash( $_POST['onboarding'] ) );
+
+	if ( $onboarding ) {
+		( new OnboardingWizard() )->install_selected_addons( $key );
+	}
 
 	$pro_path = trailingslashit( WP_PLUGIN_DIR ) . '/envira-gallery/envira-gallery.php';
 
@@ -1238,7 +1251,7 @@ function envira_connect() {
 
 		wp_send_json_success(
 			[
-				'message' => esc_html__( 'Envira Gallery Pro is installed but not activated.', 'envira-gallery-lite' ),
+				'message' => esc_html__( 'Congratulations! This site is now receiving automatic updates.', 'envira-gallery-lite' ),
 				'reload'  => true,
 			]
 		);
@@ -1297,7 +1310,7 @@ function envira_connect() {
 
 		wp_send_json_success(
 			[
-				'message' => esc_html__( 'Envira Gallery Pro is installed but not activated.', 'envira-gallery-lite' ),
+				'message' => esc_html__( 'Congratulations! This site is now receiving automatic updates.', 'envira-gallery-lite' ),
 				'reload'  => true,
 			]
 		);

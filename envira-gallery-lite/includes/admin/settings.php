@@ -34,6 +34,7 @@ class Envira_Settings {
 		add_action( 'admin_menu', [ $this, 'admin_menu' ], 11 );
 		add_action( 'envira_gallery_tab_settings_general', [ $this, 'settings_general_tab' ] );
 		add_action( 'envira_gallery_tab_settings_permissions', [ $this, 'settings_permissions_tab' ] );
+		add_action( 'envira_gallery_tab_settings_licensing', [ $this, 'settings_licensing_tab' ] );
 	}
 
 	/**
@@ -78,6 +79,7 @@ class Envira_Settings {
 		$tabs = [
 			'general'     => __( 'General', 'envira-gallery-lite' ), // This tab is required. DO NOT REMOVE VIA FILTERING.
 			'permissions' => __( 'Permissions', 'envira-gallery-lite' ),
+			'licensing'   => __( 'Image Licensing', 'envira-gallery-lite' ),
 
 		];
 		$tabs = apply_filters( 'envira_gallery_settings_tab_nav', $tabs );
@@ -179,7 +181,7 @@ class Envira_Settings {
 							</p>
 							<hr />
 							<form id="envira-settings-verify-key" method="post">
-								<p class="description"><?php esc_html_e( 'Already purchased? Simply enter your license key below to enable Envira Gallery PRO!', 'envira-gallery-lite' ); ?><?php echo esc_html( apply_filters( 'envira_whitelabel_name', 'Envira' ) ); ?></p>
+								<p class="description"><?php esc_html_e( 'Already purchased? Simply enter your license key below to enable Envira Gallery PRO!', 'envira-gallery-lite' ); ?></p>
 								<input placeholder="<?php esc_attr_e( 'Paste license key here', 'envira-gallery-lite' ); ?>" type="password" name="envira-license-key" id="envira-settings-key" value="" />
 								<button type="button " class="button envira-button-dark envira-gallery-verify-submit primary" id="envira-gallery-settings-connect-btn">
 					<?php esc_html_e( 'Verify Key', 'envira-gallery-lite' ); ?>
@@ -189,6 +191,10 @@ class Envira_Settings {
 							</form>
 						</td>
 					</tr>
+				<tr>
+					<th><?php esc_html_e( 'Setup Wizard', 'envira-gallery-lite' ); ?></th>
+					<td><a href="<?php echo esc_url( '/wp-admin/index.php?page=envira-setup-wizard' ); ?>" title="<?php esc_html_e( 'Setup Wizard', 'envira-gallery-lite' ); ?>" class="button envira-button-dark envira-button-primary" ><?php esc_html_e( 'Launch Setup Wizard', 'envira-gallery-lite' ); ?></a></td>
+				</tr>
 
 				</tbody>
 			</table>
@@ -353,5 +359,16 @@ class Envira_Settings {
 			</div>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Outputs settings screen for the licensing tab.
+	 *
+	 * @since 1.8.12-0
+	 */
+	public function settings_licensing_tab() {
+		// get instance of the plugin.
+		$envira = Envira_Gallery_Lite::get_instance();
+		$envira->load_admin_partial( 'licensing' );
 	}
 }

@@ -68,7 +68,7 @@ body.post-type-envira_album {
 		*/
 		a.page-title-action {
 			position: relative;
-			top: -53px;
+			top: -34px;
 			left: 115px; /* default - English */
 			&:hover {
 				background: $primary_button_color_hover;
@@ -86,8 +86,6 @@ body.post-type-envira_album {
 		*/
 		> h1,
 		> h2 {
-			margin: 0 0 20px 0;
-			padding: 15px 0 10px;
 			background: $white;
 			font-weight: 600;
 			font-size: 20px;
@@ -733,7 +731,7 @@ body.post-type-envira_album.post-php {
 		border-bottom: 1px solid #DDDDDD;
 		display: flex;
 		margin: 0;
-		padding: 24px;
+		padding: 20px;
 		font-size: 14px;
 		color: #3C434A99;
 		&:first-child {
@@ -760,7 +758,7 @@ body.post-type-envira_album.post-php {
 		}
 	}
 	.envira-button {
-		padding: 8px 14px;
+		padding: 5px;
 		border-radius: 4px;
 		text-decoration: none;
 		font-size: 12px;
@@ -771,6 +769,11 @@ body.post-type-envira_album.post-php {
 		&.envira-button-secondary {
 			border: 1px solid #DDDDDD;
 		}
+	}
+	.envira-notification-actions{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 	}
 
 }
@@ -1243,7 +1246,6 @@ div.addon-tag:after {
 
 
 .envira-settings-tab {
-	padding: 20px;
 	box-sizing: border-box;
 	#envira-gallery-refresh-submit {
 		margin-left: 10px;
@@ -1478,8 +1480,8 @@ div.addon-tag:after {
  * 1. Make the dialog container, and its child overlay spread across
  *    the entire window.
  */
-.dialog-container,
-.dialog-overlay {
+#envira-gallery-settings .dialog-container,
+#envira-gallery-settings .dialog-overlay {
 	position: fixed; /* 1 */
 	top: 0; /* 1 */
 	right: 0; /* 1 */
@@ -1493,7 +1495,7 @@ div.addon-tag:after {
  * 2. Make the dialog container a flex container to easily center the
  *    dialog.
  */
-.dialog-container {
+#envira-gallery-settings .dialog-container {
 	z-index: 2; /* 1 */
 	display: flex; /* 2 */
 }
@@ -1502,14 +1504,14 @@ div.addon-tag:after {
  * 1. Make sure the dialog container and all its descendants are not
  *    visible and not focusable when it is hidden.
  */
-.dialog-container[aria-hidden='true'] {
+#envira-gallery-settings .dialog-container[aria-hidden='true'] {
 	display: none; /* 1 */
 }
 
 /**
   * 1. Make the overlay look like an overlay.
   */
-.dialog-overlay {
+#envira-gallery-settings .dialog-overlay {
 	background-color: rgb(43 46 56 / 0.9); /* 1 */
 	animation: fade-in 200ms both;
 	opacity: 0.5;
@@ -1520,7 +1522,7 @@ div.addon-tag:after {
   * 2. Make sure the dialog sits on top of the overlay.
   * 3. Make sure the dialog has an opaque background.
   */
-.dialog-content {
+#envira-gallery-settings .dialog-content {
 	margin: auto; /* 1 */
 	z-index: 2; /* 2 */
 	position: relative; /* 2 */
@@ -1534,16 +1536,16 @@ div.addon-tag:after {
 	font-size: 1rem;
 	text-align: center;
 }
-.dialog-content p{
+#envira-gallery-settings .dialog-content p{
 	font-size: 1.2rem;
 	margin: 0 0 16px;
 }
 
-.dialog-content h3{
+#envira-gallery-settings .dialog-content h3{
 	font-size: 1.4rem;
 }
 
-.dialog-content .envira-dialog-btn.primary{
+#envira-gallery-settings .dialog-content .envira-dialog-btn.primary{
 	background-color: #7cc048;
 	color: #fff;
 	border: 0;
@@ -1555,7 +1557,7 @@ div.addon-tag:after {
 	padding: 11px 17px;
 }
 
-.dialog-content .envira-dialog-btn{
+#envira-gallery-settings .dialog-content .envira-dialog-btn{
 	background-color: #777777;
 	color: #fff;
 	border: 0;

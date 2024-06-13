@@ -68,7 +68,7 @@ body.post-type-envira_album {
 		*/
 		a.page-title-action {
 			position: relative;
-			top: -34px;
+			top: -37px;
 			left: 115px; /* default - English */
 			&:hover {
 				background: $primary_button_color_hover;
@@ -91,6 +91,7 @@ body.post-type-envira_album {
 			font-size: 20px;
 			width: 100%;
 			text-indent: 20px;
+			padding-bottom: 9px;
 
 			/**
 			* Page Title Action (i.e. Add New)
@@ -1019,6 +1020,21 @@ body.post-type-envira .postbox-header {
 		td:not(.check-column) {
 		display: table-cell;
 	}
+	body.post-type-envira,
+	body.post-type-envira_album {
+		/**
+		* Wrapper
+		*/
+		div.wrap {
+			/**
+			* Page Title Action (i.e. Add New)
+			*/
+			a.page-title-action {
+				top: -47px;
+				padding: 0 10px !important;
+			}
+		}
+	}
 }
 
 /* ==========================================================================
@@ -1038,7 +1054,7 @@ body.post-type-envira .postbox-header {
 				/**
 				* Allow space for the "Search results for..." text to display, when searching
 				*/
-				padding-bottom: 40px;
+				padding-bottom: 9px;
 
 				/**
 				* Subtitle (search results title)
@@ -1048,6 +1064,13 @@ body.post-type-envira .postbox-header {
 					width: 100%;
 					padding: 0;
 				}
+			}
+			/**
+			* Page Title Action (i.e. Add New)
+			*/
+			a.page-title-action {
+				top: -48px;
+				padding: 0 10px !important;
 			}
 		}
 	}

@@ -949,9 +949,8 @@ class Envira_Welcome {
 					</div>
 				</div>
 			<?php
-		} else {
-			if ( isset( $plugin['basename'] ) && is_plugin_active( $plugin['basename'] ) ) {
-				?>
+		} elseif ( isset( $plugin['basename'] ) && is_plugin_active( $plugin['basename'] ) ) {
+			?>
 							<div class="envira-am-plugins">
 							<div class="envira-am-plugins-main">
 								<div>
@@ -1000,6 +999,5 @@ class Envira_Welcome {
 						</div>
 				<?php
 			}
-		}
 	}
 }

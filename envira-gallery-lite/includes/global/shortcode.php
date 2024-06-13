@@ -1612,17 +1612,14 @@ class Envira_Gallery_Shortcode {
 					// Get the requested WordPress defined image size.
 					$src = wp_get_attachment_image_src( $id, $image_size );
 				}
-			} else {
-
-				if ( ! $retina ) {
+			} elseif ( ! $retina ) {
 
 					$isize = $this->find_clostest_size( $data ) !== '' ? $this->find_clostest_size( $data ) : 'full';
 					$isize = ( 'full' === $image_size ) ? 'full' : $isize;
 					$src   = apply_filters( 'envira_gallery_retina_image_src', wp_get_attachment_image_src( $id, $isize ), $id, $item, $data, $this->is_mobile );
 
-				} else {
-					$src = apply_filters( 'envira_gallery_retina_image_src', wp_get_attachment_image_src( $id, 'full' ), $id, $item, $data, $this->is_mobile );
-				}
+			} else {
+				$src = apply_filters( 'envira_gallery_retina_image_src', wp_get_attachment_image_src( $id, 'full' ), $id, $item, $data, $this->is_mobile );
 			}
 
 		endif;
@@ -1916,11 +1913,12 @@ class Envira_Gallery_Shortcode {
 	 *
 	 * @since 1.0.4
 	 *
-	 * @param string  $string  String of data to minify.
+	 * @param string  $string_data String of data to minify.
 	 * @param boolean $strip_double_forward_slashes stirpe forward slashes.
+	 *
 	 * @return string $string Minified string of data.
 	 */
-	public function minify( $string, $strip_double_forward_slashes = true ) {
+	public function minify( $string_data, $strip_double_forward_slashes = true ) {
 
 		// Added a switch for stripping double forwardslashes.
 		// This can be disabled when using URLs in JS, to ensure http:// doesn't get removed.
@@ -1928,16 +1926,16 @@ class Envira_Gallery_Shortcode {
 		$strip_double_forward_slashes = apply_filters( 'envira_minify_strip_double_forward_slashes', $strip_double_forward_slashes );
 
 		if ( $strip_double_forward_slashes ) {
-			$clean = preg_replace( '/((?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:\/\/.*))/', '', $string );
+			$clean = preg_replace( '/((?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:\/\/.*))/', '', $string_data );
 		} else {
 			// Use less aggressive method.
-			$clean = preg_replace( '!/\*.*?\*/!s', '', $string );
+			$clean = preg_replace( '!/\*.*?\*/!s', '', $string_data );
 			$clean = preg_replace( '/\n\s*\n/', "\n", $clean );
 		}
 
 		$clean = str_replace( [ "\r\n", "\r", "\t", "\n", '  ', '    ', '     ' ], '', $clean );
 
-		return apply_filters( 'envira_gallery_minified_string', $clean, $string );
+		return apply_filters( 'envira_gallery_minified_string', $clean, $string_data );
 	}
 
 	/**

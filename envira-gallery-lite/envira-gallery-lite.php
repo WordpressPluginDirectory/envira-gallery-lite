@@ -5,7 +5,9 @@
  * Description: Envira Gallery is the best responsive WordPress gallery plugin. This is the Lite version.
  * Author:      Envira Gallery Team
  * Author URI:  http://enviragallery.com
- * Version:     1.8.12
+ * Version:     1.8.13
+ * Requires at least: 5.5.0
+ * Requires PHP: 7.0
  * Text Domain: envira-gallery-lite
  *
  * Envira Gallery is free software: you can redistribute it and/or modify
@@ -23,6 +25,8 @@
  *
  * @package envira gallery lite.
  */
+
+// phpcs:disable Universal.Files.SeparateFunctionsFromOO.Mixed
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -55,7 +59,7 @@ class Envira_Gallery_Lite {
 	 *
 	 * @var string
 	 */
-	public $version = '1.8.12';
+	public $version = '1.8.13';
 
 	/**
 	 * The name of the plugin.
@@ -286,15 +290,19 @@ class Envira_Gallery_Lite {
 		return $gallery;
 	}
 
+	// phpcs:disable PSR2.Methods.MethodDeclaration.Underscore
 	/**
 	 * Internal method that returns a gallery based on ID.
 	 *
 	 * @since 1.0.0
 	 *
+	 * @deprecated Should be removed in future versions.
+	 *
 	 * @param int $id     The gallery ID used to retrieve a gallery.
 	 * @return array|bool Array of gallery data or false if none found.
 	 */
-	public function _get_gallery( $id ) { // @codingStandardsIgnoreLine !!!TODO refactor to remove this
+	public function _get_gallery( $id ) {
+		// phpcs:enable PSR2.Methods.MethodDeclaration.Underscore
 
 		$meta = get_post_meta( $id, '_eg_gallery_data', true );
 
@@ -349,16 +357,19 @@ class Envira_Gallery_Lite {
 		return $gallery;
 	}
 
+	// phpcs:disable PSR2.Methods.MethodDeclaration.Underscore
 	/**
 	 * Internal method that returns a gallery based on slug.
 	 *
 	 * @since 1.0.0
 	 *
+	 * @deprecated Should be removed in future versions.
+	 *
 	 * @param string $slug The gallery slug used to retrieve a gallery.
 	 * @return array|bool  Array of gallery data or false if none found.
 	 */
-	public function _get_gallery_by_slug( $slug ) { // @codingStandardsIgnoreLine !!!TODO refactor to remove this
-
+	public function _get_gallery_by_slug( $slug ) {
+		// phpcs:enable PSR2.Methods.MethodDeclaration.Underscore
 		// Get Envira CPT by slug.
 		$galleries = new WP_Query(
 			[
@@ -380,12 +391,12 @@ class Envira_Gallery_Lite {
 				'no_found_rows'  => true,
 				'cache_results'  => false,
 				'fields'         => 'ids',
-				'meta_query'     => array( // @codingStandardsIgnoreLine - Possible slow query
+				'meta_query'     => [
 					[
 						'key'   => '_eg_gallery_old_slug',
 						'value' => $slug,
 					],
-				),
+				],
 				'posts_per_page' => 1,
 			]
 		);
@@ -427,17 +438,20 @@ class Envira_Gallery_Lite {
 		return $galleries;
 	}
 
+	// phpcs:disable PSR2.Methods.MethodDeclaration.Underscore
 	/**
 	 * Internal method that returns all galleries created on the site.
 	 *
 	 * @since 1.0.0
 	 *
+	 * @deprecated Should be removed in future versions.
+	 *
 	 * @param bool   $skip_empty    Skip Empty Galleries.
 	 * @param string $search_terms  Search for specified Galleries by Title.
 	 * @return mixed                        Array of gallery data or false if none found.
 	 */
-	public function _get_galleries( $skip_empty = true, $search_terms = '' ) { // @codingStandardsIgnoreLine !!!TODO refactor to remove this
-
+	public function _get_galleries( $skip_empty = true, $search_terms = '' ) {
+		// phpcs:enable PSR2.Methods.MethodDeclaration.Underscore
 		// Build WP_Query arguments.
 		$args = [
 			'post_type'      => 'envira',
@@ -445,12 +459,12 @@ class Envira_Gallery_Lite {
 			'posts_per_page' => 99,
 			'no_found_rows'  => true,
 			'fields'         => 'ids',
-			'meta_query'     => array( // @codingStandardsIgnoreLine - Possible slow query
+			'meta_query'     => [
 				[
 					'key'     => '_eg_gallery_data',
 					'compare' => 'EXISTS',
 				],
-			),
+			],
 		];
 
 		// If search terms exist, add a search parameter to the arguments.
@@ -691,9 +705,9 @@ if ( ! function_exists( 'envira_gallery' ) ) {
 	 * @param int    $id          The ID of the gallery to load.
 	 * @param string $type        The type of field to query.
 	 * @param array  $args        Associative array of args to be passed.
-	 * @param bool   $return    Flag to echo or return the gallery HTML.
+	 * @param bool   $return_string    Flag to echo or return the gallery HTML.
 	 */
-	function envira_gallery( $id, $type = 'id', $args = [], $return = false ) {
+	function envira_gallery( $id, $type = 'id', $args = [], $return_string = false ) {
 
 		// If we have args, build them into a shortcode format.
 		$args_string = '';
@@ -707,7 +721,7 @@ if ( ! function_exists( 'envira_gallery' ) ) {
 		$shortcode = ! empty( $args_string ) ? '[envira-gallery ' . $type . '="' . $id . '"' . $args_string . ']' : '[envira-gallery ' . $type . '="' . $id . '"]';
 
 		// Return or echo the shortcode output.
-		if ( $return ) {
+		if ( $return_string ) {
 			return do_shortcode( $shortcode );
 		} else {
 			echo do_shortcode( $shortcode );

@@ -92,11 +92,13 @@ class Envira_Lite_Review {
 				'dismissed' => false,
 			];
 			$load   = true;
-		} else {
+		} elseif (
+			( isset( $review['dismissed'] ) && ! $review['dismissed'] )
+			&& ( isset( $review['time'] )
+			&& ( ( $review['time'] + DAY_IN_SECONDS ) <= $time ) )
+		) {
 			// Check if it has been dismissed or not.
-			if ( ( isset( $review['dismissed'] ) && ! $review['dismissed'] ) && ( isset( $review['time'] ) && ( ( $review['time'] + DAY_IN_SECONDS ) <= $time ) ) ) {
-				$load = true;
-			}
+			$load = true;
 		}
 
 		// If we cannot load, return early.

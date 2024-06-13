@@ -74,14 +74,14 @@ class Envira_Rest {
 	/**
 	 * Rest API callback to get gallery data.
 	 *
-	 * @param [type] $object Post Object.
+	 * @param [type] $object_data Post Object.
 	 * @param [type] $field_name Rest Field Name.
 	 * @param [type] $request Rest Request.
 	 * @return array
 	 */
-	public function get_gallery_data( $object, $field_name, $request ) {
+	public function get_gallery_data( $object_data, $field_name, $request ) {
 
-		$data = get_post_meta( $object['id'], '_eg_gallery_data', true );
+		$data = get_post_meta( $object_data['id'], '_eg_gallery_data', true );
 
 		if ( ! is_array( $data ) ) {
 			$data = [];
@@ -141,10 +141,10 @@ class Envira_Rest {
 			$data['config'] = [];
 		}
 
-		$data['config']['title'] = wp_strip_all_tags( get_the_title( $object['id'] ) );
+		$data['config']['title'] = wp_strip_all_tags( get_the_title( $object_data['id'] ) );
 
 		// Allow the data to be filtered before it is stored and used to create the gallery output.
-		$data = apply_filters( 'envira_gallery_pre_data', $data, $object['id'] );
+		$data = apply_filters( 'envira_gallery_pre_data', $data, $object_data['id'] );
 
 		return $data;
 	}
@@ -155,13 +155,14 @@ class Envira_Rest {
 	 * @since 1.8.5
 	 *
 	 * @param array  $value Value to update.
-	 * @param object $object Post Object.
+	 * @param object $post_object Post Object.
 	 * @param string $field_name Meta field name.
+	 *
 	 * @return array
 	 */
-	public function update_gallery_data( $value, $object, $field_name ) {
+	public function update_gallery_data( $value, $post_object, $field_name ) {
 
-		$gallery_data = get_post_meta( $object->ID, '_eg_gallery_data', true );
+		$gallery_data = get_post_meta( $post_object->ID, '_eg_gallery_data', true );
 
 		// If Gallery Data is emptyy prepare it.
 		if ( ! is_array( $gallery_data ) ) {
@@ -173,7 +174,7 @@ class Envira_Rest {
 
 			$common = new Envira_Gallery_Common();
 			// Loop through the defaults and prepare them to be stored.
-			$defaults = $common->get_config_defaults( $object->ID );
+			$defaults = $common->get_config_defaults( $post_object->ID );
 
 			foreach ( $defaults as $key => $default ) {
 
@@ -183,15 +184,15 @@ class Envira_Rest {
 		}
 
 		// Update Fields.
-		$gallery_data['id']              = $object->ID;
-		$gallery_data['config']['title'] = $object->title;
+		$gallery_data['id']              = $post_object->ID;
+		$gallery_data['config']['title'] = $post_object->title;
 
 		if ( isset( $value['config'] ) ) {
 			$gallery_data['config'] = wp_parse_args( $value['config'], $gallery_data['config'] );
 		}
 
 		if ( isset( $value['remove_image'] ) ) {
-			$in_gallery  = get_post_meta( $object->ID, '_eg_in_gallery', true );
+			$in_gallery  = get_post_meta( $post_object->ID, '_eg_in_gallery', true );
 			$has_gallery = get_post_meta( $value['attach_id'], '_eg_has_gallery', true );
 
 			// Unset the image from the gallery, in_gallery and has_gallery checkers.
@@ -203,7 +204,7 @@ class Envira_Rest {
 				unset( $in_gallery[ $key ] );
 			}
 
-			$has_key = array_search( $object->ID, (array) $has_gallery, true );
+			$has_key = array_search( $post_object->ID, (array) $has_gallery, true );
 
 			if ( false !== $has_key ) {
 				unset( $has_gallery[ $has_key ] );
@@ -231,9 +232,9 @@ class Envira_Rest {
 		}
 
 		// Flush gallery cache.
-		$this->common->flush_gallery_caches( $object->ID );
+		$this->common->flush_gallery_caches( $post_object->ID );
 
-		return update_post_meta( $object->ID, '_eg_gallery_data', $gallery_data );
+		return update_post_meta( $post_object->ID, '_eg_gallery_data', $gallery_data );
 	}
 	/**
 	 * Helper method to retrieve the proper image src attribute based on gallery settings.

@@ -275,13 +275,11 @@ class OnboardingWizard {
 		$plugins     = $this->get_recommended_plugins();
 		if ( strpos( $recommended, 'envira-' ) !== false ) {
 			$plugin = $recommended . '/' . $recommended . '.php';
-		} else {
+		} elseif ( array_key_exists( $recommended, $plugins ) ) {
 			// check if key exists in the array.
-			if ( array_key_exists( $recommended, $plugins ) ) {
-				$plugin = $plugins[ $recommended ];
-			} else {
-				return '';
-			}
+			$plugin = $plugins[ $recommended ];
+		} else {
+			return '';
 		}
 		if ( in_array( $plugin, array_keys( $all_plugins ), true ) ) {
 			return 'no-clicks disabled';

@@ -1880,13 +1880,14 @@ class Envira_Gallery_Metaboxes {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @global int $id        The current post ID.
-	 * @global object $post   The current post object.
 	 * @param string $key     The config key to retrieve.
-	 * @param string $default A default value to use.
+	 * @param string $default_value A default value to use.
+	 *
+	 * @global int $id        The current post ID.
+	 * @global object $post The current post object.
 	 * @return string         Key value on success, empty string on failure.
 	 */
-	public function get_config( $key, $default = false ) {
+	public function get_config( $key, $default_value = false ) {
 
 		global $id, $post;
 
@@ -1904,7 +1905,7 @@ class Envira_Gallery_Metaboxes {
 		if ( isset( $settings['config'][ $key ] ) ) {
 			return $settings['config'][ $key ];
 		} else {
-			return $default ? $default : '';
+			return $default_value ? $default_value : '';
 		}
 	}
 

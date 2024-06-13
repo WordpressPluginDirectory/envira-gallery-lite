@@ -492,6 +492,12 @@ class Envira_Gallery_Addons {
 		);
 		array_unshift( $links, $addons_link );
 
+		// If lite, show a link where they can get pro from.
+		if ( ! class_exists( 'Envira_Gallery' ) ) {
+			$get_pro = '<a title="' . esc_attr__( 'Get Envira Gallery Pro', 'envira-gallery-lite' ) . '" target="_blank" rel="noopener" href="' . Envira_Gallery_Common_Admin::get_instance()->get_upgrade_link( 'https://enviragallery.com/lite', 'pluginlisting', 'liteplugin' ) . '" style="font-weight:700; color: #1da867;">' . esc_html__( 'Get Envira Gallery Pro', 'envira-gallery-lite' ) . '</a>';
+			array_unshift( $links, $get_pro );
+		}
+
 		return $links;
 	}
 
@@ -555,61 +561,56 @@ class Envira_Gallery_Addons {
 					</div>
 				</div>
 				<?php
-			} else {
 				// Addon is licensed.
-
 				// If the plugin is not installed, display an install message and button.
-				if ( ! isset( $installed_plugins[ $plugin_basename ] ) ) {
-					?>
-					<div class="envira-addon-not-installed envira-addon-message">
-						<div class="interior">
-							<span class="addon-status"><?php esc_html_e( 'Status:', 'envira-gallery-lite' ); ?>&nbsp;<span><?php esc_html_e( 'Not Installed', 'envira-gallery-lite' ); ?></span></span>
-							<div class="envira-addon-action">
-								<a class="button envira-button-dark envira-addon-action-button envira-install-addon" href="#" rel="<?php echo esc_url( $addon->url ); ?>">
-									<i class="envira-cloud-download"></i>
-									<?php esc_html_e( 'Install', 'envira-gallery-lite' ); ?>
-								</a>
-								<span class="spinner envira-gallery-spinner"></span>
-							</div>
+			} elseif ( ! isset( $installed_plugins[ $plugin_basename ] ) ) {
+				?>
+				<div class="envira-addon-not-installed envira-addon-message">
+					<div class="interior">
+						<span class="addon-status"><?php esc_html_e( 'Status:', 'envira-gallery-lite' ); ?>&nbsp;<span><?php esc_html_e( 'Not Installed', 'envira-gallery-lite' ); ?></span></span>
+						<div class="envira-addon-action">
+							<a class="button envira-button-dark envira-addon-action-button envira-install-addon" href="#" rel="<?php echo esc_url( $addon->url ); ?>">
+								<i class="envira-cloud-download"></i>
+								<?php esc_html_e( 'Install', 'envira-gallery-lite' ); ?>
+							</a>
+							<span class="spinner envira-gallery-spinner"></span>
 						</div>
 					</div>
-					<?php
-				} else {
-					// Plugin is installed.
-					if ( is_plugin_active( $plugin_basename ) ) {
-						// Plugin is active. Display the active message and deactivate button.
-						?>
-						<div class="envira-addon-active envira-addon-message">
-							<div class="interior">
-								<span class="addon-status"><?php esc_html_e( 'Status:', 'envira-gallery-lite' ); ?>&nbsp;<span><?php esc_html_e( 'Active', 'envira-gallery-lite' ); ?></span></span>
-								<div class="envira-addon-action">
-									<a class="button envira-button-dark envira-addon-action-button envira-deactivate-addon" href="#" rel="<?php echo esc_attr( $plugin_basename ); ?>">
-										<i class="envira-toggle-on"></i>
-										<?php esc_html_e( 'Deactivate', 'envira-gallery-lite' ); ?>
-									</a>
-									<span class="spinner envira-gallery-spinner"></span>
-								</div>
-							</div>
+				</div>
+				<?php
+				// Plugin is installed.
+			} elseif ( is_plugin_active( $plugin_basename ) ) {
+				// Plugin is active. Display the active message and deactivate button.
+				?>
+				<div class="envira-addon-active envira-addon-message">
+					<div class="interior">
+						<span class="addon-status"><?php esc_html_e( 'Status:', 'envira-gallery-lite' ); ?>&nbsp;<span><?php esc_html_e( 'Active', 'envira-gallery-lite' ); ?></span></span>
+						<div class="envira-addon-action">
+							<a class="button envira-button-dark envira-addon-action-button envira-deactivate-addon" href="#" rel="<?php echo esc_attr( $plugin_basename ); ?>">
+								<i class="envira-toggle-on"></i>
+								<?php esc_html_e( 'Deactivate', 'envira-gallery-lite' ); ?>
+							</a>
+							<span class="spinner envira-gallery-spinner"></span>
 						</div>
-						<?php
-					} else {
-						// Plugin is inactivate. Display the inactivate mesage and activate button.
-						?>
-						<div class="envira-addon-inactive envira-addon-message">
-							<div class="interior">
-								<span class="addon-status"><?php esc_html_e( 'Status:', 'envira-gallery-lite' ); ?>&nbsp;<span><?php esc_html_e( 'Inactive', 'envira-gallery-lite' ); ?></span></span>
-								<div class="envira-addon-action">
-									<a class="button envira-button-dark envira-addon-action-button envira-activate-addon" href="#" rel="<?php echo esc_attr( $plugin_basename ); ?>">
-										<i class="envira-toggle-on"></i>
-										<?php esc_html_e( 'Activate', 'envira-gallery-lite' ); ?>
-									</a>
-									<span class="spinner envira-gallery-spinner"></span>
-								</div>
-							</div>
+					</div>
+				</div>
+				<?php
+			} else {
+				// Plugin is inactivate. Display the inactivate mesage and activate button.
+				?>
+				<div class="envira-addon-inactive envira-addon-message">
+					<div class="interior">
+						<span class="addon-status"><?php esc_html_e( 'Status:', 'envira-gallery-lite' ); ?>&nbsp;<span><?php esc_html_e( 'Inactive', 'envira-gallery-lite' ); ?></span></span>
+						<div class="envira-addon-action">
+							<a class="button envira-button-dark envira-addon-action-button envira-activate-addon" href="#" rel="<?php echo esc_attr( $plugin_basename ); ?>">
+								<i class="envira-toggle-on"></i>
+								<?php esc_html_e( 'Activate', 'envira-gallery-lite' ); ?>
+							</a>
+							<span class="spinner envira-gallery-spinner"></span>
 						</div>
-						<?php
-					}
-				}
+					</div>
+				</div>
+				<?php
 			}
 			?>
 		</div>

@@ -145,6 +145,7 @@ class OnboardingWizard {
 				'ajaxUrl'       => admin_url( 'admin-ajax.php' ),
 				'nonce'         => wp_create_nonce( 'enviraOnboardingCheck' ),
 				'connect_nonce' => wp_create_nonce( 'envira_gallery_connect' ),
+				'plugins_list'  => $this->get_installed_plugins(),
 			]
 		);
 		wp_register_style( 'envira-onboarding-wizard', ENVIRA_LITE_URL . 'assets/css/onboarding-wizard.css', [], ENVIRA_LITE_VERSION );
@@ -243,6 +244,38 @@ class OnboardingWizard {
 		</body>
 		</html>
 		<?php
+	}
+
+	/**
+	 * Get a list of installed recommended plugins and addons.
+	 *
+	 * @return array
+	 */
+	public function get_installed_plugins(): array {
+		$addons = [
+			'envira-albums'    => 'envira-albums/envira-albums.php',
+			'envira-tags'      => 'envira-tags/envira-tags.php',
+			'envira-proofing'  => 'envira-proofing/envira-proofing.php',
+			'envira-videos'    => 'envira-videos/envira-videos.php',
+			'envira-slideshow' => 'envira-slideshow/envira-slideshow.php',
+		];
+
+		$recommended_plugins = $this->get_recommended_plugins();
+
+		$plugins = array_merge( $recommended_plugins, $addons );
+
+		// Check if these plugins are installed already or not.
+		$all_plugins = get_plugins();
+		$installed   = [];
+
+		foreach ( $plugins as $plugin ) {
+			if ( in_array( $plugin, array_keys( $all_plugins ), true ) ) {
+				// Get array key of $plugins.
+				$installed[] = array_search( $plugin, $plugins, true );
+			}
+		}
+
+		return $installed;
 	}
 
 	/**

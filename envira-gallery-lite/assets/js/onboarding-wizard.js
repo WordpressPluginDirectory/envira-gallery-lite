@@ -225,9 +225,12 @@ features.forEach((feature) => {
 		if(e.target.checked){
 			if(!selectedFeatures.includes(e.target.value)){
 				selectedFeatures.push(e.target.value);
+				// Find the element with e.target.value + -desc and show it.
+				document.querySelector(`#${e.target.value}-desc`).style.display = "block";
 			}
 		} else {
 			selectedFeatures = selectedFeatures.filter((feature) => feature !== e.target.value);
+			document.querySelector(`#${e.target.value}-desc`).style.display = "none";
 		}
 	});
 });
@@ -273,9 +276,12 @@ recommendedPlugins.forEach((recommended) => {
 		if(e.target.checked){
 			selectedRecommended.push(e.target.value);
 			selectedPluginsNames.push(e.target.getAttribute("data-name"));
+			// Find the element with e.target.value + -desc and show it.
+			document.querySelector(`#${e.target.value}-desc`).style.display = "block";
 		} else {
 			selectedRecommended = selectedRecommended.filter((recommended) => recommended !== e.target.value);
 			selectedPluginsNames = selectedPluginsNames.filter((name) => name !== e.target.getAttribute("data-name"));
+			document.querySelector(`#${e.target.value}-desc`).style.display = "none";
 		}
 		displaySelectedPlugins();
 	});
@@ -289,8 +295,9 @@ let displaySelectedPlugins = () => {
 		// check if there are any selected recommended plugins.
 		recommendedPlugins.forEach((recommended) => {
 			// get the checked recommended plugins that are not in the selectedRecommended array.
-			if(recommended.checked && !selectedRecommended.includes(recommended.value)){
+			if(recommended.checked && !selectedRecommended.includes(recommended.value) && !enviraOnboardingWizard.plugins_list.includes(recommended.value) ){
 				selectedPluginsNames.push(recommended.getAttribute("data-name"));
+				document.querySelector(`#${recommended.value}-desc`).style.display = "block";
 			}
 		});
 	}
@@ -372,6 +379,8 @@ function displaySelectedAddons() {
 		let addonName = document.querySelector(`input[name="${feature}"]`).getAttribute("data-name");
 		addon.innerHTML = `${tickSvg}${addonName}</div>`
 		selectedAddons.appendChild(addon);
+		// show the desc of the selected feature.
+		document.querySelector(`#${feature}-desc`).style.display = "block";
 	});
 }
 

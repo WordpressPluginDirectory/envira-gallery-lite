@@ -23,6 +23,10 @@ $checked    = 'checked';
 				</div>
 			</div>
 		</div>
+		<?php
+		$is_installed  = $onboarding->is_recommended_plugin_installed( 'all-in-one-seo-pack' );
+		$installs_text = ! $is_installed ? esc_html__( 'Installs All In One SEO Pack', 'envira-gallery-lite' ) : esc_html__( 'All In One SEO Pack is already installed', 'envira-gallery-lite' );
+		?>
 		<div class="feature-grid small-padding medium-margin">
 			<div class="envira-row">
 				<div class="envira-col col-xs-11 text-xs-left">
@@ -31,13 +35,9 @@ $checked    = 'checked';
 							<label for="all-in-one-seo-pack"><?php esc_html_e( 'SEO Toolkit', 'envira-gallery-lite' ); ?></label>
 						</div>
 						<div class="envira-description-text"><?php esc_html_e( 'Improve your website search rankings for your gallery with AIOSEO', 'envira-gallery-lite' ); ?></div>
-
+						<div class="envira-desc" id="all-in-one-seo-pack-desc"><?php echo esc_html( $installs_text ); ?></div>
 					</div>
 				</div>
-				<?php
-				$is_installed = $onboarding->is_recommended_plugin_installed( 'all-in-one-seo-pack' );
-
-				?>
 				<div class="envira-col col-xs-1 text-xs-left">
 					<label class="envira-checkbox round <?php echo esc_attr( $is_installed ); ?>">
 				<span class="form-checkbox-wrapper">
@@ -59,6 +59,10 @@ $checked    = 'checked';
 				</div>
 			</div>
 		</div>
+		<?php
+		$is_installed  = $onboarding->is_recommended_plugin_installed( 'wpforms-lite' );
+		$installs_text = ! $is_installed ? esc_html__( 'Installs WP Forms', 'envira-gallery-lite' ) : esc_html__( 'WP Forms is already installed', 'envira-gallery-lite' );
+		?>
 		<div class="feature-grid small-padding medium-margin">
 			<div class="envira-row">
 				<div class="envira-col col-xs-11 text-xs-left">
@@ -67,13 +71,9 @@ $checked    = 'checked';
 							<label for="wpforms-lite"><?php esc_html_e( 'Form Builder', 'envira-gallery-lite' ); ?></label>
 						</div>
 						<div class="envira-description-text"><?php esc_html_e( 'Build forms for your photography business using the fastest form builder ever WPForms', 'envira-gallery-lite' ); ?></div>
-
+						<div class="envira-desc" id="wpforms-lite-desc"><?php echo esc_html( $installs_text ); ?></div>
 					</div>
 				</div>
-				<?php
-				$is_installed = $onboarding->is_recommended_plugin_installed( 'wpforms-lite' );
-
-				?>
 				<div class="envira-col col-xs-1 text-xs-left">
 					<label class="envira-checkbox round <?php echo esc_attr( $is_installed ); ?>">
 				<span class="form-checkbox-wrapper">
@@ -95,6 +95,10 @@ $checked    = 'checked';
 				</div>
 			</div>
 		</div>
+		<?php
+		$is_installed  = $onboarding->is_recommended_plugin_installed( 'google-analytics-for-wordpress' );
+		$installs_text = ! $is_installed ? esc_html__( 'Installs Google Analytics For WordPress', 'envira-gallery-lite' ) : esc_html__( 'Google Analytics For WordPress is already installed', 'envira-gallery-lite' );
+		?>
 		<div class="feature-grid small-padding medium-margin">
 			<div class="envira-row">
 				<div class="envira-col col-xs-11 text-xs-left">
@@ -103,13 +107,9 @@ $checked    = 'checked';
 							<label for="google-analytics-for-wordpress"><?php esc_html_e( 'Website Analytics', 'envira-gallery-lite' ); ?></label>
 						</div>
 						<div class="envira-description-text"><?php esc_html_e( 'Understand your customer’s interactions across your Galleries with MonsterInsight.', 'envira-gallery-lite' ); ?></div>
-
+						<div class="envira-desc" id="google-analytics-for-wordpress-desc"><?php echo esc_html( $installs_text ); ?></div>
 					</div>
 				</div>
-				<?php
-				$is_installed = $onboarding->is_recommended_plugin_installed( 'google-analytics-for-wordpress' );
-
-				?>
 				<div class="envira-col col-xs-1 text-xs-left">
 					<label class="envira-checkbox round <?php echo esc_attr( $is_installed ); ?>">
 				<span class="form-checkbox-wrapper">
@@ -131,6 +131,10 @@ $checked    = 'checked';
 				</div>
 			</div>
 		</div>
+		<?php
+		$is_installed  = $onboarding->is_recommended_plugin_installed( 'duplicator' );
+		$installs_text = ! $is_installed ? esc_html__( 'Installs Duplicator', 'envira-gallery-lite' ) : esc_html__( 'Duplicator is already installed', 'envira-gallery-lite' );
+		?>
 		<div class="feature-grid small-padding medium-margin">
 			<div class="envira-row">
 				<div class="envira-col col-xs-11 text-xs-left">
@@ -139,13 +143,9 @@ $checked    = 'checked';
 							<label for="duplicator"><?php esc_html_e( 'Website Backups', 'envira-gallery-lite' ); ?></label>
 						</div>
 						<div class="envira-description-text"><?php esc_html_e( 'Backup, Migrate, Secure your gallery images from getting lost with Duplicator.', 'envira-gallery-lite' ); ?></div>
-
+						<div class="envira-desc" id="duplicator-desc"><?php echo esc_html( $installs_text ); ?></div>
 					</div>
 				</div>
-				<?php
-				$is_installed = $onboarding->is_recommended_plugin_installed( 'duplicator' );
-
-				?>
 				<div class="envira-col col-xs-1 text-xs-left">
 					<label class="envira-checkbox round <?php echo esc_attr( $is_installed ); ?>">
 				<span class="form-checkbox-wrapper">
@@ -167,6 +167,11 @@ $checked    = 'checked';
 				</div>
 			</div>
 		</div>
+		<?php
+		$is_installed  = $onboarding->is_recommended_plugin_installed( 'wp-mail-smtp' );
+		$installs_text = ! $is_installed ? esc_html__( 'Installs WP Mail SMTP', 'envira-gallery-lite' ) : esc_html__( 'WP Mail SMTP is already installed', 'envira-gallery-lite' );
+
+		?>
 		<div class="feature-grid small-padding medium-margin">
 			<div class="envira-row">
 				<div class="envira-col col-xs-11 text-xs-left">
@@ -175,13 +180,9 @@ $checked    = 'checked';
 							<label for="wp-mail-smtp"><?php esc_html_e( 'Email Deliverability', 'envira-gallery-lite' ); ?></label>
 						</div>
 						<div class="envira-description-text"><?php esc_html_e( 'Set up your WordPress to use a trusted email provider with WP Mail SMTP', 'envira-gallery-lite' ); ?></div>
-
+						<div class="envira-desc" id="wp-mail-smtp-desc"><?php echo esc_html( $installs_text ); ?></div>
 					</div>
 				</div>
-				<?php
-				$is_installed = $onboarding->is_recommended_plugin_installed( 'wp-mail-smtp' );
-
-				?>
 				<div class="envira-col col-xs-1 text-xs-left">
 					<label class="envira-checkbox round <?php echo esc_attr( $is_installed ); ?>">
 				<span class="form-checkbox-wrapper">

@@ -777,6 +777,73 @@ class Envira_Gallery_Metaboxes {
 				<tbody>
 					<tr id="envira-config-columns-box">
 						<th scope="row">
+							<label for="envira-config-columns"><?php esc_html_e( 'Gallery Layout', 'envira-gallery-lite' ); ?></label>
+						</th>
+						<td>
+							<div class="gallery-layout-container">
+								<div id="upsell-prompt" class="upsell-prompt">
+									<a href="javascript:void(0);" id="close-upsell" class="close-button">&times;</a>
+									<div class="slogan-text-left">
+										<h3><?php esc_html_e( 'Upgrade to Pro!', 'envira-gallery-lite' ); ?></h3>
+										<p>
+											<?php
+											echo wp_kses_post(
+												__( 'Access <span class="module-number">10+</span> creative layouts. <span class="offer">Get 50%</span> off regular price, automatically applied at checkout', 'envira-gallery-lite' )
+											);
+											?>
+										</p>
+										<a href="<?php echo esc_url( Envira_Gallery_Common_Admin::get_instance()->get_upgrade_link( 'https://enviragallery.com/lite', 'adminpageconfig', 'upgradetopro' ) ); ?>" class="button button-primary" target="_blank"><?php esc_html_e( 'Unlock all Layouts', 'envira-gallery-lite' ); ?></a>
+									</div>
+								</div>
+								<ul class="thumbnails image_picker_selector">
+									<li>
+										<div class="thumbnail selected">
+											<img class="image_picker_image" src="<?php echo esc_url( trailingslashit( ENVIRA_LITE_URL ) . 'assets/images/automatic-layout.png' ); ?>">
+											<p><?php esc_html_e( 'Automatic', 'envira-gallery-lite' ); ?></p>
+										</div>
+									</li>
+									<li>
+										<div class="thumbnail upgrade-to-pro">
+											<img class="image_picker_image" src="<?php echo esc_url( trailingslashit( ENVIRA_LITE_URL ) . 'assets/images/mason-layout.png' ); ?>">
+											<p><?php esc_html_e( 'Mason', 'envira-gallery-lite' ); ?></p>
+										</div>
+									</li>
+									<li>
+										<div class="thumbnail upgrade-to-pro">
+											<img class="image_picker_image" src="<?php echo esc_url( trailingslashit( ENVIRA_LITE_URL ) . 'assets/images/grid-layout.png' ); ?>">
+											<p><?php esc_html_e( 'Grid', 'envira-gallery-lite' ); ?></p>
+										</div>
+									</li>
+									<li>
+										<div class="thumbnail upgrade-to-pro">
+											<img class="image_picker_image" src="<?php echo esc_url( trailingslashit( ENVIRA_LITE_URL ) . 'assets/images/square-layout.png' ); ?>">
+											<p><?php esc_html_e( 'Square', 'envira-gallery-lite' ); ?></p>
+										</div>
+									</li>
+									<li>
+										<div class="thumbnail upgrade-to-pro">
+											<img class="image_picker_image" src="<?php echo esc_url( trailingslashit( ENVIRA_LITE_URL ) . 'assets/images/blogroll-layout.png' ); ?>">
+											<p><?php esc_html_e( 'Blogroll', 'envira-gallery-lite' ); ?></p>
+										</div>
+									</li>
+									<li>
+										<div class="thumbnail upgrade-to-pro">
+											<img class="image_picker_image" src="<?php echo esc_url( trailingslashit( ENVIRA_LITE_URL ) . 'assets/images/bnb-layout.png' ); ?>">
+											<p><?php esc_html_e( 'BnB', 'envira-gallery-lite' ); ?></p>
+										</div>
+									</li>
+									<li>
+										<div class="thumbnail upgrade-to-pro">
+											<img class="image_picker_image" src="<?php echo esc_url( trailingslashit( ENVIRA_LITE_URL ) . 'assets/images/polaroid-layout.png' ); ?>">
+											<p><?php esc_html_e( 'Polaroid', 'envira-gallery-lite' ); ?></p>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</td>
+					</tr>
+					<tr id="envira-config-columns-box">
+						<th scope="row">
 							<label for="envira-config-columns"><?php esc_html_e( 'Number of Gallery Columns', 'envira-gallery-lite' ); ?></label>
 						</th>
 						<td>

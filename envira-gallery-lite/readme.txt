@@ -2,9 +2,9 @@
 Contributors: enviragallery
 Tags: gallery, image gallery, photo gallery, best gallery plugin, wordpress gallery plugin
 Requires at least: 5.5.0
-Tested up to: 6.5
+Tested up to: 6.6.1
 Requires PHP: 7.0
-Stable tag: 1.8.13
+Stable tag: 1.8.14
 License: GNU General Public License v2.0 or later
 
 Envira Gallery is the fastest, easiest, and most powerful WordPress image gallery. Lightbox with Drag & Drop builder that helps you create beautiful galleries with just a few clicks.
@@ -238,6 +238,15 @@ You can get access to more features, Addons and support by <a href="http://envir
 Yes, Envira has full translation and localization support via the envira-gallery textdomain. To submit a translation, see https://translate.wordpress.org/projects/wp-plugins/envira-gallery-lite
 
 == Changelog ==
+1.8.14
+* Added: Responsive CSS for the most popular tag
+* Added: New gallery layout icon section
+* Added: Upsell banner section for pro gallery layout
+* Added: Show plugin names when a user selects an addon or plugin on the onboarding wizard.
+* Added: made header logo clickable
+* Added: New layout icon
+* Added: Bump PHP version to a minimum of 7.0
+
 1.8.13
 * Fixes: Add gallery button alignment
 * Fixes: Minimum PHP version required

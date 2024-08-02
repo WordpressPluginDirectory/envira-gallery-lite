@@ -373,6 +373,24 @@ body.post-type-envira_album.locale-fr-fr {
 				width: 90%;
 			}
 		}
+
+		a.envira-logo-link{
+			outline: none;
+			border: none;
+			box-shadow: none;
+
+			&:focus {
+				outline: none;
+				border: none;
+				box-shadow: none;
+			}
+
+			&:active {
+				outline: none;
+				border: none;
+				box-shadow: none;
+			}
+		}
 	}
 	.envira-right {
 		padding-right: 20px;
@@ -1128,6 +1146,33 @@ div.addon-tag:after {
 	-ms-transform: skew(-45deg);
 	transform: skew(-45deg);
 	z-index: -1;
+}
+
+@media (max-width: 449px) {
+	.addon-tag {
+		padding: 5px 25px 5px 12px;
+		font-size: 10px;
+	}
+}
+
+@media (min-width: 449px) and (max-width: 1449px) {
+	.addon-tag {
+		padding: 5px 30px 5px 12px;
+		font-size: 12px;
+	}
+}
+
+@media (min-width: 1449px) and (max-width: 1649px) {
+	.addon-tag {
+		padding: 10px 38px 10px 16px;
+		font-size: 13px;
+	}
+}
+
+@media (min-width: 1649px) and (max-width: 1749px) {
+	.addon-tag {
+		padding: 10px 40px 10px 18px;
+	}
 }
 
 .envira-admin-content {

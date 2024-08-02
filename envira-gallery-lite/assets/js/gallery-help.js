@@ -46,11 +46,31 @@ jQuery( document ).ready( function( $ ) {
     * Destroy Video when closed
     */
     $( document ).on( 'click', envira_close_video_link, function( e ) {
-        
+
         e.preventDefault();
-        
+
         $( this ).closest( '.envira-video-help' ).remove();
 
     } );
 
 } );
+
+/**
+ * Display upsell section on gallery layout selection.
+ */
+jQuery(document).ready(function($) {
+	var $thumbnails = $('.thumbnails li .upgrade-to-pro');
+	var $upsellPrompt = $('#upsell-prompt');
+	var $thumbnailsContainer = $('.thumbnails');
+	var $closeButton = $('#close-upsell');
+
+	$thumbnails.on('click', function() {
+		$upsellPrompt.show();
+		$thumbnailsContainer.addClass('no-click');
+	});
+
+	$closeButton.on('click', function() {
+		$upsellPrompt.hide();
+		$thumbnailsContainer.removeClass('no-click');
+	});
+});

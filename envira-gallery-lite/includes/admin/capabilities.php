@@ -35,6 +35,69 @@ class Envira_Capabilities {
 	public function __construct() {
 		// Register capabilities.
 		add_action( 'admin_init', [ $this, 'add_capabilities' ] );
+		add_filter( 'pre_get_posts', [ $this, 'show_only_user_envira_galleries' ] );
+		add_action( 'current_screen', [ $this,'restrict_envira_gallery_access' ] );
+	}
+
+	/**
+	 * Restricts access to Envira Galleries based on user capabilities.
+	 *
+	 * This function is hooked into the current_screen action, and checks if the current user has the required capability to edit other users' galleries.
+	 * If the user doesn't have the capability, they're redirected to the Envira Galleries page.
+	 *
+	 * @return void
+	 */
+	public function restrict_envira_gallery_access() {
+		$screen = get_current_screen();
+		if ( 'envira' !== $screen->post_type && 'post' !== $screen->base ) {
+			return;
+		}
+		$gallery_id = isset( $_GET['post'] ) ? absint( sanitize_key( $_GET['post'] ) ) : null; // phpcs:ignore WordPress.Security.NonceVerification
+
+		if ( ! $gallery_id ) {
+			return;
+		}
+
+		$gallery = get_post( $gallery_id );
+
+		if ( get_current_user_id() === (int) $gallery->post_author ) {
+			return;
+		}
+
+		// If the user doesn't have the capability to edit other users' galleries, redirect to listing.
+
+		if ( ! current_user_can( 'edit_others_envira_galleries' ) ) {
+			wp_safe_redirect( admin_url( 'edit.php?post_type=envira' ) );
+			exit;
+		}
+	}
+
+	/**
+	 * Restricts access to Envira Galleries based on user capabilities.
+	 *
+	 * This function is hooked into the pre_get_posts action, and checks if the current user has the required capability to edit other users' galleries.
+	 * If the user doesn't have the capability, they're only shown their own galleries.
+	 *
+	 * @param WP_Query $query The WP_Query object.
+	 *
+	 * @return WP_Query
+	 */
+	public function show_only_user_envira_galleries( $query ) {
+		global $pagenow;
+
+		if ( 'edit.php' !== $pagenow || ! $query->is_admin ) {
+			return $query;
+		}
+
+		if ( 'envira' !== $query->get( 'post_type' ) ) {
+			return $query;
+		}
+
+		if ( ! current_user_can( 'edit_others_envira_galleries' ) ) {
+			global $user_ID;
+			$query->set( 'author', $user_ID );
+		}
+		return $query;
 	}
 
 	/**

@@ -430,9 +430,8 @@ class Envira_Gallery_Shortcode {
 		$output  = apply_filters( 'envira_gallery_output_dynamic_position', $output, $id, $item, $data, $i, 'bottom-right' );
 		$output .= '</div>';
 
-		// Title.
-		$title = str_replace( '<', '&lt;', $item['title'] ); // not sure why this was not encoded.
-		$title = wp_strip_all_tags( htmlspecialchars( $title ) );
+		$title = esc_html( wp_strip_all_tags( htmlspecialchars( $item['title'], ENT_QUOTES, 'UTF-8' ) ) );
+		$title = htmlentities( $title, ENT_QUOTES, 'UTF-8' );
 
 		// Caption.
 		// Lite doesn't support captions, so we fallback to the title.
@@ -505,7 +504,7 @@ class Envira_Gallery_Shortcode {
 
 			// Automatic.
 
-			$output_item = '<img id="envira-gallery-image-' . sanitize_html_class( $id ) . '" class="envira-gallery-image envira-gallery-image-' . $i . $gallery_theme . ' ' . $envira_lazy_load . '" data-envira-index="' . $i . '" src="' . esc_url( $output_src ) . '"' . ( $this->get_config( 'dimensions', $data ) ? ' width="' . $this->get_config( 'crop_width', $data ) . '" height="' . $this->get_config( 'crop_height', $data ) . '"' : '' ) . ' data-envira-src="' . esc_url( $output_src ) . '" data-envira-gallery-id="' . $data['id'] . '" data-envira-item-id="' . $id . '" data-envira-caption="' . $title . '" alt="' . esc_attr( $item['alt'] ) . '" title="' . wp_strip_all_tags( htmlspecialchars( $item['title'] ) ) . '" ' . apply_filters( 'envira_gallery_output_image_attr', '', $id, $item, $data, $i ) . ' itemprop="thumbnailUrl" data-envira-srcset="' . esc_url( $output_src ) . ' 400w,' . esc_url( $output_src ) . ' 2x" data-envira-width="' . $output_width . '" data-envira-height="' . $output_height . '" srcset="' . ( ( $envira_lazy_load ) ? 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' : esc_url( $image_src_retina ) . ' 2x' ) . '" data-safe-src="' . ( ( $envira_lazy_load ) ? 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' : esc_url( $output_src ) ) . '" />';
+			$output_item = '<img id="envira-gallery-image-' . sanitize_html_class( $id ) . '" class="envira-gallery-image envira-gallery-image-' . $i . $gallery_theme . ' ' . $envira_lazy_load . '" data-envira-index="' . $i . '" src="' . esc_url( $output_src ) . '"' . ( $this->get_config( 'dimensions', $data ) ? ' width="' . $this->get_config( 'crop_width', $data ) . '" height="' . $this->get_config( 'crop_height', $data ) . '"' : '' ) . ' data-envira-src="' . esc_url( $output_src ) . '" data-envira-gallery-id="' . $data['id'] . '" data-envira-item-id="' . $id . '" data-envira-caption="' . $caption . '" alt="' . esc_attr( $item['alt'] ) . '" title="' . wp_strip_all_tags( htmlspecialchars( $item['title'] ) ) . '" ' . apply_filters( 'envira_gallery_output_image_attr', '', $id, $item, $data, $i ) . ' itemprop="thumbnailUrl" data-envira-srcset="' . esc_url( $output_src ) . ' 400w,' . esc_url( $output_src ) . ' 2x" data-envira-width="' . $output_width . '" data-envira-height="' . $output_height . '" srcset="' . ( ( $envira_lazy_load ) ? 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' : esc_url( $image_src_retina ) . ' 2x' ) . '" data-safe-src="' . ( ( $envira_lazy_load ) ? 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' : esc_url( $output_src ) ) . '" />';
 
 		} else {
 
@@ -1334,14 +1333,18 @@ class Envira_Gallery_Shortcode {
 								if ( empty( $image_id ) ) {
 									continue;
 								}
+
+								$title = wp_strip_all_tags( htmlspecialchars( $image['title'], ENT_QUOTES, 'UTF-8' ) );
+								$title = htmlentities( $title, ENT_QUOTES, 'UTF-8' );
+
 								?>
 								envira_gallery_images[<?php echo intval( $data['id'] ); ?>].push({
 									href: '<?php echo esc_url( $image['src'] ); ?>',
 									gallery_id: <?php echo intval( $data['id'] ); ?>,
 									id: <?php echo intval( $image_id ); ?>,
 									alt: '<?php echo esc_attr( addslashes( str_replace( "\n", '<br />', $image['alt'] ) ) ); ?>',
-									caption: '<?php echo esc_attr( addslashes( str_replace( "\n", '<br />', $image['caption'] ) ) ); ?>',
-									title: '<?php echo esc_attr( addslashes( str_replace( "\n", '<br />', $image['title'] ) ) ); ?>',
+									caption: '<?php echo esc_html( $title ); ?>',
+									title: '<?php echo esc_html( $title ); ?>',
 									index: <?php echo intval( $count ); ?>,
 									thumbnail: '<?php echo ( isset( $image['thumb'] ) ? esc_js( $image['thumb'] ) : '' ); ?>'
 									<?php do_action( 'envira_gallery_api_lightbox_image_attributes', $image, $image_id, $lightbox_images, $data ); ?>

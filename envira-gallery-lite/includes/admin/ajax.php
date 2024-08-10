@@ -610,13 +610,13 @@ add_action( 'wp_ajax_envira_gallery_load_gallery_data', 'envira_gallery_ajax_loa
  * @since 1.0.0
  */
 function envira_gallery_ajax_load_gallery_data() {
+	check_admin_referer( 'envira-gallery-load-gallery', 'nonce' );
+	$gallery_id = isset( $_POST['post_id'] ) ? absint( sanitize_key( $_POST['post_id'] ) ) : null;
 
-	if ( ! current_user_can( 'edit_posts' ) ) {
-		wp_send_json_error( [ 'message' => esc_html__( 'You are not allowed to edit galleries.', 'envira-gallery-lite' ) ] );
+	if ( ! current_user_can( 'edit_post', $gallery_id ) ) {
+			wp_send_json_error( [ 'message' => esc_html__( 'You are not allowed to edit galleries.', 'envira-gallery-lite' ) ] );
 	}
 
-	// Prepare variables and grab the gallery data.
-	$gallery_id   = isset( $_POST['post_id'] ) ? absint( wp_unslash( $_POST['post_id'] ) ) : null; // @codingStandardsIgnoreLine
 	$gallery_data = get_post_meta( $gallery_id, '_eg_gallery_data', true );
 
 	// Send back the gallery data.
